@@ -52,7 +52,7 @@ public class SYMAI_Mod {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new KeyInputHandler(this));
         // Initialize OpenAiService with your OpenAI API key
-        openAiService = new OpenAiService("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"); // replace YOUR_OPENAI_API_KEY with your actual key
+        openAiService = new OpenAiService(""); // replace YOUR_OPENAI_API_KEY with your actual key
     }
 
     @Mod.EventBusSubscriber(modid = SYMAI_Mod.MODID, value = Dist.CLIENT)
