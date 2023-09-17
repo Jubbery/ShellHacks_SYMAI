@@ -130,7 +130,32 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    implementation 'com.theokanning.openai-gpt3-java:<api|client|service>:<version>'
+
+    // Real mod deobf dependency examples - these get remapped to your current mappings
+    // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
+//    implementation ('com.theokanning.openai-gpt3-java:service:0.14.0'){
+//       exclude(group: 'org.slf4j', module: 'slf4j-api')
+//    }
+//    exclude group: 'org.slf4j', module: 'slf4j-api'
+//    implementation 'com.theokanning.openai-gpt3-java:client:0.14.0'
+//    implementation 'com.theokanning.openai-gpt3-java:api:0.14.0'
+
+    minecraftLibrary jarJar(group: "io.reactivex.rxjava2", name: "rxjava", version: "[2.0.0,)") { transitive = false }
+    minecraftLibrary jarJar(group: "org.slf4j", name: "slf4j-api", version: "[1,)") { transitive = false }
+//    minecraftLibrary jarJar(group: "com.squareup.retrofit2", name: "retrofit", version: "[2.9.0,)") { transitive = false }
+//    minecraftLibrary jarJar(group: "com.squareup.retrofit2", name: "adapter-rxjava2", version: "[2.9.0,)") { transitive = false }
+//    minecraftLibrary jarJar(group: "com.squareup.retrofit2", name: "converter-jackson", version: "[2.9.0,)") { transitive = false }
+
+    minecraftLibrary jarJar(group: "com.squareup.okhttp3", name: "okhttp", version: "[3.14.9,)") { transitive = false }
+    minecraftLibrary jarJar(group: "com.squareup.okio", name: "okio", version: "[1.17.2,)") { transitive = false }
+    minecraftLibrary jarJar(annotationProcessor(group: "org.projectlombok", name: "lombok", version: "[1.18.26,)")){ transitive = false }
+    minecraftLibrary jarJar(group: "com.theokanning.openai-gpt3-java", name: "service", version: "[0.14.0,)"){ transitive = false }
+    minecraftLibrary jarJar(group: "com.theokanning.openai-gpt3-java", name: "client", version: "[0.14.0,)"){ transitive = false }
+    minecraftLibrary jarJar(group: "com.theokanning.openai-gpt3-java", name: "api", version: "[0.14.0,)"){ transitive = false }
+
+//    minecraftLibrary jarJar(group: "com.knuddels", name: "jtokkit", version: "[0.6.1,)") { transitive = false }
+
+    minecraftLibrary jarJar(compileOnly(group: 'org.reactivestreams', name: 'reactive-streams', version: '[1.0.4,)')) { transitive = false }
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
@@ -154,11 +179,11 @@ dependencies {
 // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
-            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version: forge_version, forge_version_range: forge_version_range,
+            minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+            forge_version       : forge_version, forge_version_range: forge_version_range,
             loader_version_range: loader_version_range,
-            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors: mod_authors, mod_description: mod_description,
+            mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors         : mod_authors, mod_description: mod_description,
     ]
     inputs.properties replaceProperties
 
